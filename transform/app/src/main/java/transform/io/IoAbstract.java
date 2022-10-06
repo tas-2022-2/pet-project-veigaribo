@@ -8,8 +8,10 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import transform.transform.Transformer;
+
 // Template
-public abstract class IoAbstract implements Closeable {
+public abstract class IoAbstract implements Closeable, Transformer {
     public final BufferedInputStream breader;
     public final OutputStream out;
     public final Charset charset;
@@ -24,6 +26,7 @@ public abstract class IoAbstract implements Closeable {
         this.charset = charset;
     }
 
+    @Override
     public abstract String transform(String input);
 
     public void pipe() throws IOException {

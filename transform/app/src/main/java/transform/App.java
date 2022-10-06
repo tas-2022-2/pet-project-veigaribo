@@ -11,6 +11,7 @@ import transform.io.TransformerIo;
 import transform.parse.CsvParser;
 import transform.parse.Parser;
 import transform.transform.Transformer;
+import transform.transform.ParserGeneratorTransformer;
 
 public class App {
     public static void main(String[] args) {
@@ -42,7 +43,7 @@ public class App {
         }
 
         final Parser parser = new CsvParser(true, ';', NewLineTypes.LF);
-        final var transformer = new Transformer(parser, gen);
+        final Transformer transformer = new ParserGeneratorTransformer(parser, gen);
 
         try (final var io = new TransformerIo(transformer, System.in, System.out)) {
             io.pipe();
