@@ -11,7 +11,7 @@ import java.util.List;
 
 class CsvParserTest {
     @Test
-    void parseWithHeadersCommaLF() {
+    void parseWithHeadersCommaLf() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21));
@@ -22,7 +22,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaLF2() {
+    void parseWithHeadersCommaLf2() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21),
@@ -34,7 +34,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaLFNoTrailingNewline() {
+    void parseWithHeadersCommaLfNoTrailingNewline() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21));
@@ -45,7 +45,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersTabLF() {
+    void parseWithHeadersTabLf() {
         var sut = new CsvParser(true, '\t', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21));
@@ -56,7 +56,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithoutHeadersCommaLF() {
+    void parseWithoutHeadersCommaLf() {
         var sut = new CsvParser(false, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21));
@@ -90,7 +90,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaCRLF() {
+    void parseWithHeadersCommaCrlf() {
         var sut = new CsvParser(true, ',', NewLineTypes.CRLF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21));
@@ -101,7 +101,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaCRLF2() {
+    void parseWithHeadersCommaCrlf2() {
         var sut = new CsvParser(true, ',', NewLineTypes.CRLF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21),
@@ -113,7 +113,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaLFEmpty() {
+    void parseWithHeadersCommaLfEmpty() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of();
@@ -124,7 +124,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithoutHeadersCommaLFEmpty() {
+    void parseWithoutHeadersCommaLfEmpty() {
         var sut = new CsvParser(false, ',', NewLineTypes.LF);
 
         var people = List.of();
@@ -135,7 +135,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithoutHeadersCommaLFEmptyNoTrailingNewline() {
+    void parseWithoutHeadersCommaLfEmptyNoTrailingNewline() {
         var sut = new CsvParser(false, ',', NewLineTypes.LF);
 
         var people = List.of();
@@ -146,7 +146,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaLFNewlineInColumn() {
+    void parseWithHeadersCommaLfNewlineInColumn() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga'\nOR\n1=1 --", 21));
@@ -157,7 +157,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaCRLFNewlineInColumn() {
+    void parseWithHeadersCommaCrlfNewlineInColumn() {
         var sut = new CsvParser(true, ',', NewLineTypes.CRLF);
 
         var people = List.of(new Person("333.444.333-33", "veiga'\nOR\n1=1 --", 21));
@@ -168,7 +168,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaLFQuoteInColumn() {
+    void parseWithHeadersCommaLfQuoteInColumn() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' \"OR 1=1\" --", 21));
@@ -179,7 +179,7 @@ class CsvParserTest {
     }
 
     @Test
-    void parseWithHeadersCommaLFQuoteInColumnNotEnclosedInQuotes() {
+    void parseWithHeadersCommaLfQuoteInColumnNotEnclosedInQuotes() {
         var sut = new CsvParser(true, ',', NewLineTypes.LF);
 
         var people = List.of(new Person("333.444.333-33", "veiga' \"OR 1=1\" --", 21));
@@ -198,6 +198,42 @@ class CsvParserTest {
 
         // trailing separator in each line
         var csv = "cpf;nome;idade;\n333.444.333-33;veiga' OR 1=1 --;21;\n" + "222.222.222.-22;betito;90;\n";
+
+        assertIterableEquals(people, sut.parse(csv));
+    }
+
+    @Test
+    void lfByDefault() {
+        var sut = new CsvParser(true, ',');
+
+        var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21),
+                new Person("222.222.222.-22", "betito", 90));
+
+        var csv = "cpf,nome,idade\n333.444.333-33,veiga' OR 1=1 --,21\n" + "222.222.222.-22,betito,90\n";
+
+        assertIterableEquals(people, sut.parse(csv));
+    }
+
+    @Test
+    void commaByDefault() {
+        var sut = new CsvParser(true, NewLineTypes.LF);
+
+        var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21),
+                new Person("222.222.222.-22", "betito", 90));
+
+        var csv = "cpf,nome,idade\n333.444.333-33,veiga' OR 1=1 --,21\n" + "222.222.222.-22,betito,90\n";
+
+        assertIterableEquals(people, sut.parse(csv));
+    }
+
+    @Test
+    void commaLfByDefault() {
+        var sut = new CsvParser(true);
+
+        var people = List.of(new Person("333.444.333-33", "veiga' OR 1=1 --", 21),
+                new Person("222.222.222.-22", "betito", 90));
+
+        var csv = "cpf,nome,idade\n333.444.333-33,veiga' OR 1=1 --,21\n" + "222.222.222.-22,betito,90\n";
 
         assertIterableEquals(people, sut.parse(csv));
     }
