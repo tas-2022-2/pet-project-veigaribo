@@ -2,7 +2,7 @@ package transform.gen.tags;
 
 import java.util.regex.Pattern;
 
-public class Content extends TagOrContent {
+public class Content implements TagOrContent {
     final String content;
 
     final Pattern ltPattern = Pattern.compile("<");

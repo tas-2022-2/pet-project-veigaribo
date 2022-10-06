@@ -1,5 +1,5 @@
 package transform.gen.tags;
 
-public abstract class TagOrContent {
-    public abstract String toString();
+public interface TagOrContent {
+    public String toString();
 }

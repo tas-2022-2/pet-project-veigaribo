@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Tag extends TagOrContent {
+public class Tag implements TagOrContent {
     public final String name;
     public final Map<String, String> attributes;
     public final List<TagOrContent> children;
