@@ -55,7 +55,7 @@ class ParserGeneratorTransformerTest {
         final var result = sut.transform(input);
 
         assertEquals(output, result);
-        assertEquals(input, parser.calledWith.get(0));
         assertIterableEquals(people, generator.calledWith.get(0));
+        assertEquals(input, parser.calledWith.get(0));
     }
 }
